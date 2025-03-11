@@ -1,29 +1,25 @@
-// src/components/ArticleList.tsx
-import React from 'react';
-
-interface Post {
-  id: number;
-  title: string;
-  date: string;
-  preview: string;
-}
+import React from "react";
+import Article from "./Article"; // Import the new Article component
 
 interface ArticleListProps {
-  posts: Post[];
+  posts: { id: number; title: string; date?: string; preview: string; minutes: number }[];
 }
 
 const ArticleList: React.FC<ArticleListProps> = ({ posts }) => {
   return (
-    <main>
+    <div>
       {posts.map((post) => (
-        <article key={post.id}>
-          <h2>{post.title}</h2>
-          <small>{post.date}</small>
-          <p>{post.preview}</p>
-        </article>
+        <Article 
+          key={post.id} 
+          title={post.title} 
+          date={post.date} 
+          preview={post.preview} 
+          minutes={post.minutes} 
+        />
       ))}
-    </main>
+    </div>
   );
 };
 
 export default ArticleList;
+

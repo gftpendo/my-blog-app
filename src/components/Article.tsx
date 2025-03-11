@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 type ArticleProps = {
   title: string;
   date?: string;
   preview: string;
   minutes: number;
+  content: string; // Include content as a prop
 };
 
 const Article: React.FC<ArticleProps> = ({
@@ -12,7 +13,10 @@ const Article: React.FC<ArticleProps> = ({
   date = "January 1, 1970",
   preview,
   minutes,
+  content,
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false); // State for toggling content
+
   // Function to generate the 'Minutes to Read' emoji display
   const generateReadTime = (minutes: number) => {
     if (minutes < 30) {
@@ -22,12 +26,23 @@ const Article: React.FC<ArticleProps> = ({
     }
   };
 
+  const handleToggleContent = () => {
+    setIsExpanded((prev) => !prev); // Toggle the state to show full content
+  };
+
   return (
     <article>
       <h3>{title}</h3>
       <small>{date}</small>
       <p>{preview}</p>
       <p>{generateReadTime(minutes)}</p>
+
+      {/* Conditionally render content based on state */}
+      {isExpanded ? <p>{content}</p> : null}
+
+      <button onClick={handleToggleContent}>
+        {isExpanded ? "Read Less" : "Read More"}
+      </button>
     </article>
   );
 };
